@@ -1,0 +1,34 @@
+<Page x:Class="InvoiceApp.EditPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Language="ru-RU">
+    <DockPanel Margin="22">
+      <StackPanel DockPanel.Dock="Top">
+        <TextBlock FontSize="23" Text="{Binding Id, StringFormat='Накладная · ID {0}'}"/>
+        <TextBlock Margin="0,8,0,2" Text="Номер"/>
+        <TextBox Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Margin="0,8,0,2" Text="Поставщик"/>
+        <TextBox Text="{Binding Supplier, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Margin="0,8,0,2" Text="Дата"/>
+        <DatePicker x:Name="DateBox" SelectedDate="{Binding Date}"/>
+        <WrapPanel Margin="0,10">
+            <Button Padding="8,4" Content="Добавить позицию" Click="Add_Click"/>
+            <Button Padding="8,4" Margin="8,0,0,0" Content="Удалить позицию" Click="Remove_Click"/>
+        </WrapPanel>
+      </StackPanel>
+      <StackPanel DockPanel.Dock="Bottom">
+        <TextBlock Margin="0,10" FontSize="16" FontWeight="Bold" Text="{Binding InvoiceTotal, StringFormat='Итого: {0:N2} ₽'}"/>
+        <WrapPanel>
+            <Button Padding="8,4" Content="Сохранить" Click="Save_Click"/>
+            <Button Padding="8,4" Margin="8,0,0,0" Content="Отмена" Click="Back_Click"/>
+        </WrapPanel>
+      </StackPanel>
+      <DataGrid x:Name="ItemsGrid" ItemsSource="{Binding Items}" AutoGenerateColumns="False"
+         CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Товар" Width="*" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+          <DataGridTextColumn Header="Цена, ₽" Width="100" Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+          <DataGridTextColumn Header="Количество" Width="110" Binding="{Binding Count, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>
+          <DataGridTextColumn Header="Сумма, ₽" Width="115" IsReadOnly="True" Binding="{Binding ItemTotal, StringFormat=N2}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+    </DockPanel>
+</Page>
